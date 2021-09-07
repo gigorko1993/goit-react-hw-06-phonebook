@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
-
-import ContactForm from "./ContactForm";
-import Filter from "./Filter";
-import ContactList from "./ContactList";
+import ContactForm from "./components/ContactForm";
+import Filter from "./components/Filter";
+import ContactList from "./components/ContactList";
 import s from "./App.module.css";
 
 export default function App() {
