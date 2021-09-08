@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-// import React, { useState } from "react";
-// import { connect } from "react-redux";
 import actions from "../../redux/contacts/contacts-action";
 import s from "./ContactForm.module.css";
 
@@ -11,10 +9,6 @@ const ContactForm = () => {
 
   const contacts = useSelector((state) => state.contacts.contactItems);
   const dispatch = useDispatch();
-
-  // const addContacts = () => {
-  //   dispatch(actions.addContact({ contacts: { name, number } }));
-  // };
 
   const onChange = (e) => {
     const { name, value } = e.currentTarget;
@@ -43,8 +37,7 @@ const ContactForm = () => {
       alert(`${name} is already in contact`);
       return;
     }
-    dispatch(actions.addContact({ contacts: { name, number } }));
-    // addContacts({ name, number });
+    dispatch(actions.addContact({ name, number }));
     setName("");
     setNumber("");
   };
@@ -84,10 +77,4 @@ const ContactForm = () => {
   );
 };
 
-// const mapStateToProps = (state) => ({ contacts: state.contacts.contactItems });
-
-// const mapDispatchToProps = (dispatch) => ({
-//   submitNewContact: (contact) => dispatch(actions.addContact(contact)),
-// });
-// export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
 export default ContactForm;
