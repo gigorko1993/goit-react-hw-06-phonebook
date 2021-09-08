@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import actions from "../../redux/contacts/contacts-action";
 import s from "./ContactForm.module.css";
 
-const ContactForm = (contacts, onSetNewContact) => {
+const ContactForm = ({ contacts, submitNewContact }) => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
 
@@ -25,6 +25,7 @@ const ContactForm = (contacts, onSetNewContact) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(contacts);
 
     const contactCheck = contacts.find(
       (contact) => contact.name.toLowerCase() === name.toLowerCase()
@@ -32,11 +33,11 @@ const ContactForm = (contacts, onSetNewContact) => {
 
     if (contactCheck) {
       alert(`${name} is already in contact`);
-    } else {
-      onSetNewContact({ name, number });
-      setName("");
-      setNumber("");
+      return;
     }
+    submitNewContact({ name, number });
+    setName("");
+    setNumber("");
   };
 
   return (
@@ -77,6 +78,6 @@ const ContactForm = (contacts, onSetNewContact) => {
 const mapStateToProps = (state) => ({ contacts: state.contacts.contactItems });
 
 const mapDispatchToProps = (dispatch) => ({
-  onSetNewContact: (contact) => dispatch(actions.addContact(contact)),
+  submitNewContact: (contact) => dispatch(actions.addContact(contact)),
 });
 export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
