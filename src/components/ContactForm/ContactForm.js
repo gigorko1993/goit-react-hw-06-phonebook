@@ -1,11 +1,20 @@
 import React, { useState } from "react";
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+// import React, { useState } from "react";
+// import { connect } from "react-redux";
 import actions from "../../redux/contacts/contacts-action";
 import s from "./ContactForm.module.css";
 
-const ContactForm = ({ contacts, submitNewContact }) => {
+const ContactForm = () => {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+
+  const contacts = useSelector((state) => state.contacts.contactItems);
+  const dispatch = useDispatch();
+
+  // const addContacts = () => {
+  //   dispatch(actions.addContact({ contacts: { name, number } }));
+  // };
 
   const onChange = (e) => {
     const { name, value } = e.currentTarget;
@@ -34,7 +43,8 @@ const ContactForm = ({ contacts, submitNewContact }) => {
       alert(`${name} is already in contact`);
       return;
     }
-    submitNewContact({ name, number });
+    dispatch(actions.addContact({ contacts: { name, number } }));
+    // addContacts({ name, number });
     setName("");
     setNumber("");
   };
@@ -74,9 +84,10 @@ const ContactForm = ({ contacts, submitNewContact }) => {
   );
 };
 
-const mapStateToProps = (state) => ({ contacts: state.contacts.contactItems });
+// const mapStateToProps = (state) => ({ contacts: state.contacts.contactItems });
 
-const mapDispatchToProps = (dispatch) => ({
-  submitNewContact: (contact) => dispatch(actions.addContact(contact)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+// const mapDispatchToProps = (dispatch) => ({
+//   submitNewContact: (contact) => dispatch(actions.addContact(contact)),
+// });
+// export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
+export default ContactForm;
