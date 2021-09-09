@@ -35,6 +35,8 @@ const ContactForm = () => {
     );
 
     if (contactCheck) {
+      setName("");
+      setNumber("");
       alert(`${name} is already in contact`);
       return;
     }
