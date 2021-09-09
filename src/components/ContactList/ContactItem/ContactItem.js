@@ -1,16 +1,22 @@
-import { connect } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { getFiltredContacts } from "../../../redux/contacts/contacts-selectors";
+
 import actions from "../../../redux/contacts/contacts-action";
 
 import s from "./ContactItem.module.css";
 
-const ContactItem = ({ contact, removeContact }) => {
+const ContactItem = () => {
+  const contact = useSelector(getFiltredContacts);
+  const dispatch = useDispatch();
+
   return contact.map(({ name, number, id }) => {
     return (
       <li className={s.item} key={id}>
         {name}: {number}
         <button
           className={s.button}
-          onClick={() => removeContact(id)}
+          onClick={() => dispatch(actions.deleteContact(id))}
           type="button"
         >
           Delete
@@ -19,19 +25,5 @@ const ContactItem = ({ contact, removeContact }) => {
     );
   });
 };
-const onFiltredContacts = (filterItem, contact) => {
-  const lowerCasedFilter = filterItem.toLowerCase();
-  const filteredContacts = contact.filter(({ name }) =>
-    name.toLowerCase().includes(lowerCasedFilter)
-  );
-  return filteredContacts;
-};
 
-const mapStateToProps = ({ contacts: { filter, contactItems } }) => ({
-  contact: onFiltredContacts(filter, contactItems),
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  removeContact: (id) => dispatch(actions.deleteContact(id)),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(ContactItem);
+export default ContactItem;
